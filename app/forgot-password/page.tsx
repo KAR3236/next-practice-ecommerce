@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Button,
@@ -7,19 +8,17 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
+import { Form } from "../Components/Form";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useFormik } from "formik";
-import { useRouter } from "next/navigation";
-import { Form } from "./Components/Form";
-import { loginValidation } from "./Validations/userValidation";
+import { forgotPasswordValidation } from "../Validations/userValidation";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
-import { hideLoader, showLoader } from "./Redux/Slice/loaderSlice";
-import { loginAPI } from "./APIs/userAPIs";
-import { constant } from "./Utils/constants";
+import { hideLoader, showLoader } from "../Redux/Slice/loaderSlice";
+import { forgotPasswordAPI } from "../APIs/userAPIs";
+import { constant } from "../Utils/constants";
 
-export default function Home() {
+const ForgotPassword = () => {
   const navigate = useRouter();
 
   //Redux
@@ -30,22 +29,18 @@ export default function Home() {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
+      newPassword: "",
     },
-    validationSchema: loginValidation,
+    validationSchema: forgotPasswordValidation,
     onSubmit: (values) => {
       dispatch(showLoader());
-      loginAPI(values)
-        .then((loginData: any) => {
-          if (loginData?.data?.statusCode === 200) {
-            Cookies.set("loginToken", loginData?.data?.data?.token, {
-              expires: 1,
-              path: "/",
-            });
-            toast.success(loginData?.data?.message);
-            navigate.push("/dashboard");
+      forgotPasswordAPI(values)
+        .then((registerData: any) => {
+          if (registerData?.data?.statusCode === 202) {
+            toast.success(registerData?.data?.message);
+            navigate.push("/");
           } else {
-            toast.error(loginData?.data?.message);
+            toast.error(registerData?.data?.message);
           }
         })
         .catch((error: any) => {
@@ -81,17 +76,17 @@ export default function Home() {
         <Grid container justifyContent="center" alignItems="center">
           <Form onSubmit={formik.handleSubmit}>
             <Grid item xs={12}>
-              <h4 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
-                {constant.LOGIN}
-              </h4>
+              <h1 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
+                {constant.FORGOT_PASSWORD}
+              </h1>
             </Grid>
 
             <Grid item xs={12}>
               <TextField
                 id={constant.EMAIL}
                 label={constant.EMAIL}
-                name={constant.EMAIL.toLowerCase()}
                 type={constant.EMAIL.toLowerCase()}
+                name={constant.EMAIL.toLowerCase()}
                 placeholder="name@example.com"
                 style={{ padding: 10 }}
                 value={formik?.values?.email}
@@ -109,37 +104,23 @@ export default function Home() {
 
             <Grid item xs={12}>
               <TextField
-                id={constant.PASSWORD}
-                label={constant.PASSWORD}
-                name={constant.PASSWORD.toLowerCase()}
+                id={constant.NEW_PASSWORD}
                 type={constant.PASSWORD.toLowerCase()}
-                placeholder="Enter password"
-                style={{ padding: 10, paddingBottom: "0" }}
-                value={formik?.values?.password}
+                label={constant.NEW_PASSWORD}
+                name="newPassword"
+                placeholder="Enter new password"
+                style={{ padding: 10 }}
+                value={formik?.values?.newPassword}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
               />
-              {formik?.touched?.password && formik?.errors?.password ? (
+              {formik?.touched?.newPassword && formik?.errors?.newPassword ? (
                 <div
                   style={{ color: "red", paddingLeft: 10, paddingBottom: 10 }}
                 >
-                  {formik?.errors?.password}
+                  {formik?.errors?.newPassword}
                 </div>
               ) : null}
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              style={{
-                paddingLeft: "10px",
-                paddingBottom: "10px",
-                color: "blue",
-              }}
-            >
-              <Link href="/forgot-password">
-                <small>{constant.FORGOT_PASSWORD}?</small>
-              </Link>
             </Grid>
 
             <Grid item xs={12} style={{ textAlign: "center" }}>
@@ -148,7 +129,7 @@ export default function Home() {
                 variant="contained"
                 style={{ color: "black", backgroundColor: "white" }}
               >
-                {loader ? <CircularProgress size={25} /> : constant.LOGIN}
+                {loader ? <CircularProgress size={25} /> : constant.SUBMIT}
               </Button>
             </Grid>
             <hr className="my-4"></hr>
@@ -157,15 +138,16 @@ export default function Home() {
               <Link
                 className="bg-gray-500 hover:bg-gray-700"
                 style={{ padding: 8, color: "white" }}
-                href="/signup"
+                href="/"
               >
-                {constant.CREATE_ACCOUNT}
+                {constant.LOGIN}
               </Link>
             </Grid>
-            <br />
           </Form>
         </Grid>
       </Paper>
     </Box>
   );
-}
+};
+
+export default ForgotPassword;
