@@ -16,7 +16,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 export default function SideBar() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation">
-      <Toolbar disableGutters sx={{ mb: 0.5 }}>
+      <Toolbar disableGutters>
         <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1, ml: 2 }} />
         <Typography
           variant="h6"

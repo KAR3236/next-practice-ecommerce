@@ -40,3 +40,28 @@ export const forgotPasswordValidation = Yup.object({
     )
     .required(),
 });
+
+export const editProfileValidation = Yup.object({
+  email: Yup.string().email().required(),
+  first_name: Yup.string().required(),
+  last_name: Yup.string().required(),
+  mobile_no: Yup.string().min(10).required(),
+  dob: Yup.string().required(),
+});
+
+export const updatePasswordValidation = Yup.object({
+  password: Yup.string()
+    .min(8)
+    .matches(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      "Password must contain at least 8 characters, one lowercase letter, one uppercase letter, one number, and one special character"
+    )
+    .required(),
+  newPassword: Yup.string()
+    .min(8)
+    .matches(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      "Password must contain at least 8 characters, one lowercase letter, one uppercase letter, one number, and one special character"
+    )
+    .required(),
+});

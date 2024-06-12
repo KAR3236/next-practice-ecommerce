@@ -8,15 +8,15 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import { Form } from "../Components/Form";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useFormik } from "formik";
-import { forgotPasswordValidation } from "../Validations/userValidation";
 import { useDispatch, useSelector } from "react-redux";
-import { hideLoader, showLoader } from "../Redux/Slice/loaderSlice";
-import { forgotPasswordAPI } from "../APIs/userAPIs";
-import { constant } from "../Utils/constants";
+import { Form } from "@/app/Components/Form";
+import { updatePasswordValidation } from "@/app/Validations/userValidation";
+import { hideLoader, showLoader } from "@/app/Redux/Slice/loaderSlice";
+import { updatePasswordAPI } from "@/app/APIs/userAPIs";
+import { constant } from "@/app/Utils/constants";
 
 const ForgotPassword = () => {
   const navigate = useRouter();
@@ -28,19 +28,19 @@ const ForgotPassword = () => {
   // Formik for validation and handle event by user
   const formik = useFormik({
     initialValues: {
-      email: "",
+      password: "",
       newPassword: "",
     },
-    validationSchema: forgotPasswordValidation,
+    validationSchema: updatePasswordValidation,
     onSubmit: (values) => {
       dispatch(showLoader());
-      forgotPasswordAPI(values)
-        .then((forgotPasswordData: any) => {
-          if (forgotPasswordData?.data?.statusCode === 202) {
-            toast.success(forgotPasswordData?.data?.message);
-            navigate.push("/");
+      updatePasswordAPI(values)
+        .then((updatePasswordData: any) => {
+          if (updatePasswordData?.data?.statusCode === 202) {
+            toast.success(updatePasswordData?.data?.message);
+            navigate.push("/view-profile");
           } else {
-            toast.error(forgotPasswordData?.data?.message);
+            toast.error(updatePasswordData?.data?.message);
           }
         })
         .catch((error: any) => {
@@ -77,27 +77,27 @@ const ForgotPassword = () => {
           <Form onSubmit={formik.handleSubmit}>
             <Grid item xs={12}>
               <h1 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
-                {constant.FORGOT_PASSWORD}
+                {constant.UPDATE_PASSWORD}
               </h1>
             </Grid>
 
             <Grid item xs={12}>
               <TextField
-                id={constant.EMAIL}
-                label={constant.EMAIL}
-                type={constant.EMAIL.toLowerCase()}
-                name={constant.EMAIL.toLowerCase()}
-                placeholder="name@example.com"
+                id={constant.PASSWORD}
+                label={constant.PASSWORD}
+                type={constant.PASSWORD.toLowerCase()}
+                name={constant.PASSWORD.toLowerCase()}
+                placeholder="Enter old password"
                 style={{ padding: 10 }}
-                value={formik?.values?.email}
+                value={formik?.values?.password}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
               />
-              {formik?.touched?.email && formik?.errors?.email ? (
+              {formik?.touched?.password && formik?.errors?.password ? (
                 <div
                   style={{ color: "red", paddingLeft: 10, paddingBottom: 10 }}
                 >
-                  {formik?.errors?.email}
+                  {formik?.errors?.password}
                 </div>
               ) : null}
             </Grid>
@@ -129,7 +129,7 @@ const ForgotPassword = () => {
                 variant="contained"
                 style={{ color: "black", backgroundColor: "white" }}
               >
-                {loader ? <CircularProgress size={25} /> : constant.SUBMIT}
+                {loader ? <CircularProgress size={25} /> : constant.UPDATE}
               </Button>
             </Grid>
             <hr className="my-4"></hr>
@@ -138,9 +138,9 @@ const ForgotPassword = () => {
               <Link
                 className="bg-gray-500 hover:bg-gray-700"
                 style={{ padding: 8, color: "white" }}
-                href="/"
+                href="/view-profile"
               >
-                {constant.LOGIN}
+                {constant.BACK}
               </Link>
             </Grid>
           </Form>

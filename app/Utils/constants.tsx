@@ -17,4 +17,9 @@ export const constant = {
   FORGOT_PASSWORD: "Forgot Password",
   ACTIVE_ACCOUNT: "Active account",
   BACK: "Back",
+  VIEW_PROFILE: "View Profile",
+  EDIT: "Edit",
+  EDIT_PROFILE: "Edit Profile",
+  UPDATE_PASSWORD: "Update Password",
+  UPDATE: "Update",
 };
