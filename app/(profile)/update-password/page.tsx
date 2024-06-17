@@ -18,7 +18,7 @@ import { hideLoader, showLoader } from "@/app/Redux/Slice/loaderSlice";
 import { updatePasswordAPI } from "@/app/APIs/userAPIs";
 import { constant } from "@/app/Utils/constants";
 
-const ForgotPassword = () => {
+const UpdatePassword = () => {
   const navigate = useRouter();
 
   //Redux
@@ -150,4 +150,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default UpdatePassword;

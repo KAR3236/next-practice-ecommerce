@@ -1,6 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Box, Button, Grid, Paper, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  Paper,
+  TextField,
+} from "@mui/material";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,107 +60,113 @@ const ViewProfile = () => {
         }}
       >
         <Grid style={{ padding: 20, textAlign: "center" }}>
-          <Grid item xs={12}>
-            <h1 style={{ padding: 20, fontSize: 25 }}>
-              {constant.VIEW_PROFILE}
-            </h1>
-          </Grid>
+          {loader ? (
+            <CircularProgress size={25} />
+          ) : (
+            <>
+              <Grid item xs={12}>
+                <h1 style={{ padding: 20, fontSize: 25 }}>
+                  {constant.VIEW_PROFILE}
+                </h1>
+              </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              id={constant.EMAIL}
-              type={constant.EMAIL.toLowerCase()}
-              name={constant.EMAIL.toLowerCase()}
-              placeholder="name@example.com"
-              disabled={true}
-              style={{ padding: 10 }}
-              value={data?.email}
-            />
-          </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id={constant.EMAIL}
+                  type={constant.EMAIL.toLowerCase()}
+                  name={constant.EMAIL.toLowerCase()}
+                  placeholder="name@example.com"
+                  disabled={true}
+                  style={{ padding: 10 }}
+                  value={data?.email}
+                />
+              </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              id={constant.FIRST_NAME}
-              name="first_name"
-              type="text"
-              placeholder="Enter your first name"
-              disabled={true}
-              style={{ padding: 10 }}
-              value={data?.first_name}
-            />
-          </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id={constant.FIRST_NAME}
+                  name="first_name"
+                  type="text"
+                  placeholder="Enter your first name"
+                  disabled={true}
+                  style={{ padding: 10 }}
+                  value={data?.first_name}
+                />
+              </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              id={constant.LAST_NAME}
-              name="last_name"
-              type="text"
-              placeholder="Enter your last name"
-              disabled={true}
-              style={{ padding: 10 }}
-              value={data?.last_name}
-            />
-          </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id={constant.LAST_NAME}
+                  name="last_name"
+                  type="text"
+                  placeholder="Enter your last name"
+                  disabled={true}
+                  style={{ padding: 10 }}
+                  value={data?.last_name}
+                />
+              </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              id={constant.MOBILE_NO}
-              name="mobile_no"
-              type="text"
-              placeholder="Enter your Mobile No"
-              disabled={true}
-              style={{ padding: 10 }}
-              value={data?.mobile_no}
-            />
-          </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id={constant.MOBILE_NO}
+                  name="mobile_no"
+                  type="text"
+                  placeholder="Enter your Mobile No"
+                  disabled={true}
+                  style={{ padding: 10 }}
+                  value={data?.mobile_no}
+                />
+              </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              id={constant.DOB}
-              type="date"
-              name="dob"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              disabled={true}
-              style={{ padding: 10, paddingBottom: 20 }}
-              value={data?.dob}
-            />
-          </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id={constant.DOB}
+                  type="date"
+                  name="dob"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  disabled={true}
+                  style={{ padding: 10, paddingBottom: 20 }}
+                  value={data?.dob}
+                />
+              </Grid>
 
-          <Grid item xs={12} style={{ textAlign: "center" }}>
-            <Button
-              className="bg-gray-500 hover:bg-gray-700"
-              type="button"
-              variant="contained"
-              onClick={() => navigate.push("/edit-profile")}
-            >
-              {constant.EDIT_PROFILE}
-            </Button>
-          </Grid>
-          <hr className="my-4"></hr>
+              <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Button
+                  className="bg-gray-500 hover:bg-gray-700"
+                  type="button"
+                  variant="contained"
+                  onClick={() => navigate.push("/edit-profile")}
+                >
+                  {constant.EDIT_PROFILE}
+                </Button>
+              </Grid>
+              <hr className="my-4"></hr>
 
-          <Grid item xs={12} style={{ textAlign: "center" }}>
-            <Button
-              className="bg-gray-500 hover:bg-gray-700"
-              type="button"
-              variant="contained"
-              onClick={() => navigate.push("/update-password")}
-            >
-              {constant.UPDATE_PASSWORD}
-            </Button>
-          </Grid>
-          <hr className="my-4"></hr>
+              <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Button
+                  className="bg-gray-500 hover:bg-gray-700"
+                  type="button"
+                  variant="contained"
+                  onClick={() => navigate.push("/update-password")}
+                >
+                  {constant.UPDATE_PASSWORD}
+                </Button>
+              </Grid>
+              <hr className="my-4"></hr>
 
-          <Grid item xs={12} style={{ textAlign: "center" }}>
-            <Link
-              className="bg-gray-500 hover:bg-gray-700"
-              style={{ padding: 8, color: "white" }}
-              href="/dashboard"
-            >
-              {constant.BACK}
-            </Link>
-          </Grid>
+              <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Link
+                  className="bg-gray-500 hover:bg-gray-700"
+                  style={{ padding: 8, color: "white" }}
+                  href="/dashboard"
+                >
+                  {constant.BACK}
+                </Link>
+              </Grid>
+            </>
+          )}
         </Grid>
       </Paper>
     </Box>

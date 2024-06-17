@@ -37,7 +37,7 @@ function Header() {
         navigate.push("/view-profile");
         break;
       case "Address":
-        navigate.push("/address");
+        navigate.push("/view-address");
         break;
       case "Dashboard":
         navigate.push("/dashboard");

@@ -65,3 +65,12 @@ export const updatePasswordValidation = Yup.object({
     )
     .required(),
 });
+
+export const addAddressValidation = Yup.object({
+  address_line_1: Yup.string().required(),
+  address_line_2: Yup.string().required(),
+  city: Yup.string().required(),
+  state: Yup.string().required(),
+  country: Yup.string().required(),
+  pin_code: Yup.number().required(),
+});

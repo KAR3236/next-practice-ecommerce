@@ -1,15 +1,21 @@
 import {
+  AddAddressDataInterface,
   ForgotPasswordDataInterface,
   LoginDataInterface,
   RegistrationDataInterface,
   UpdatePasswordDataInterface,
 } from "../Utils/userInterface";
 import {
+  ADD_ADDRESS_API,
+  DELETE_ADDRESS_API,
   EDIT_PROFILE_API,
   FORGOT_PASSWORD_API,
+  LIST_OF_ADDRESSES_API,
   LOGIN_API,
   REGISTRATION_API,
+  UPDATE_ADDRESS_API,
   UPDATE_PASSWORD_API,
+  VIEW_ADDRESS_API,
   VIEW_PROFILE_API,
 } from "./APIs";
 import { baseURL } from "./baseUrl";
@@ -47,6 +53,46 @@ export async function editProfileAPI(data: RegistrationDataInterface) {
 
 export async function updatePasswordAPI(data: UpdatePasswordDataInterface) {
   return await baseURL.put(UPDATE_PASSWORD_API, data, {
+    headers: {
+      Authorization: `Bearer ${loginToken}`,
+    },
+  });
+}
+
+export async function listOfUserAddressesAPI() {
+  return await baseURL.get(LIST_OF_ADDRESSES_API, {
+    headers: {
+      Authorization: `Bearer ${loginToken}`,
+    },
+  });
+}
+
+export async function addAddressAPI(data: AddAddressDataInterface) {
+  return await baseURL.post(ADD_ADDRESS_API, data, {
+    headers: {
+      Authorization: `Bearer ${loginToken}`,
+    },
+  });
+}
+
+export async function viewAddressAPI(id: string) {
+  return await baseURL.get(`${VIEW_ADDRESS_API}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${loginToken}`,
+    },
+  });
+}
+
+export async function updateAddressAPI(id: string, data: AddAddressDataInterface) {
+  return await baseURL.put(`${UPDATE_ADDRESS_API}/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${loginToken}`,
+    },
+  });
+}
+
+export async function deleteAddressAPI(id: number) {
+  return await baseURL.delete(`${DELETE_ADDRESS_API}/${id}`, {
     headers: {
       Authorization: `Bearer ${loginToken}`,
     },
